@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Auth\Authenticatable as AuthenticableTrait;
+use Illuminate\Auth\Passwords\CanResetPassword;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
-
+    use AuthenticableTrait, CanResetPassword;
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass assignable for creating and updating db records.
      *
      * @var string[]
      */
@@ -34,6 +35,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    /**
+     * The attributes that should be cast type to date and time.
+     *
+     * @var array
+     */
     protected $dates = [
         'created_at',
         'updated_at'
